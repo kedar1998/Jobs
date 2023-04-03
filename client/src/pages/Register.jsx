@@ -29,7 +29,6 @@ const Register = () => {
       displayAlert()
       return 
     }
-    console.log("HELLO");
   }
 
   const toggleMember = () =>{
