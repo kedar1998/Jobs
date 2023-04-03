@@ -6,13 +6,24 @@ dotenv.config()
 // DATABASE
 import connectDB from './db/connect.js'
 
+// ROUTER
+import authRouter from './routes/authRoutes.js'
+import jobsRouter from './routes/jobsRoutes.js'
+
 // MIDDLEWARE
 import NotFoundMiddleware from './middleware/NotFoundMiddleware.js'
 import ErrorHandlerMiddleware from './middleware/error-handler.js'
 
+app.use(express.json())
+
+// ROUTES
 app.get("/", (req,res) =>{
     res.send("Testing!")
 })
+
+app.use("/api/v1/auth", authRouter)
+app.use("/api/v1/jobs", jobsRouter)
+
 
 app.use(NotFoundMiddleware)
 app.use(ErrorHandlerMiddleware)
