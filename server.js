@@ -20,8 +20,8 @@ import ErrorHandlerMiddleware from './middleware/error-handler.js'
 app.use(express.json())
 
 // ROUTES
-app.get("/", (req,res) =>{
-    res.send("Testing!")
+app.get("/api/v1", (req,res) =>{
+    res.json({msg: "Testing!"})
 })
 
 app.use("/api/v1/auth", authRouter)
