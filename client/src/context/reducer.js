@@ -1,5 +1,6 @@
 import React from 'react'
-import {DISPLAY_ALERT, CLEAR_ALERT, REGISTER_USER_BEGIN, REGISTER_USER_SUCCESS, REGISTER_USER_ERROR, LOGIN_USER_BEGIN, LOGIN_USER_SUCCESS, LOGIN_USER_ERROR} from './actions'
+import {DISPLAY_ALERT, CLEAR_ALERT, REGISTER_USER_BEGIN, REGISTER_USER_SUCCESS, REGISTER_USER_ERROR, LOGIN_USER_BEGIN, LOGIN_USER_SUCCESS, LOGIN_USER_ERROR, TOGGLE_SIDEBAR, LOGOUT_USER} from './actions'
+import { initialState } from './appContext'
 
 const reducer = (state, action) => {
 
@@ -33,6 +34,14 @@ const reducer = (state, action) => {
 
     if(action.type === LOGIN_USER_ERROR){
         return {...state, isLoading: false, showAlert: true, alertText: action.payload.msg, alertType: "danger"}
+    }
+
+    if(action.type === TOGGLE_SIDEBAR){
+        return {...state, showSidebar: !state.showSidebar}
+    }
+    
+    if(action.type === LOGOUT_USER){
+        return {...initialState, suser: null, token: null, userLocation: null, jobLocation: null}
     }
   
     return state
