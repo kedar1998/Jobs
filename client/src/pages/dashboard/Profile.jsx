@@ -33,28 +33,28 @@ const Profile = () => {
             type="text" 
             name="name" 
             value={name} 
-            handleChnage={() => setName(e.target.value)}    
+            handleChange={(e) => setName(e.target.value)}    
           />
 
           <Formrow 
             type="text" 
             name="lastName" 
             value={lastName} 
-            handleChnage={() => setlastName(e.target.value)}    
+            handleChange={(e) => setlastName(e.target.value)}    
           />
 
           <Formrow 
             type="email" 
             name="email" 
             value={email} 
-            handleChnage={() => setEmail(e.target.value)}    
+            handleChange={(e) => setEmail(e.target.value)}    
           />
 
           <Formrow 
             type="text" 
             name="location" 
             value={location} 
-            handleChnage={() => setLocation(e.target.value)}    
+            handleChange={(e) => setLocation(e.target.value)}    
           />
 
           <button type="submit" className='btn btn-block' disabled={isLoading}>
