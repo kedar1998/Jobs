@@ -78,7 +78,7 @@ const reducer = (state, action) => {
     }
 
     if(action.type === CREATE_JOB_SUCCESS){
-        return {...state, isLoading: false, showAlert: true, alertText: 'success', alertText: 'New Job Created!'}
+        return {...state, isLoading: false, showAlert: true, alertType: 'success', alertText: 'New Job Created!'}
     }
 
     if(action.type === CREATE_JOB_ERROR){
