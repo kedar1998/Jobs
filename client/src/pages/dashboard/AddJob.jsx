@@ -6,7 +6,7 @@ import Formrowselect from '../../components/Formrowselect'
 
 const AddJob = () => {
 
-  const {isLoading, isEditing, showAlert, displayAlert, position, company, jobLocation, jobType, jobTypeOptions, status, statusOptions, handleChange, clearValues, createJob} = useAppContext()
+  const {isLoading, isEditing, showAlert, displayAlert, position, company, jobLocation, jobType, jobTypeOptions, status, statusOptions, handleChange, clearValues, createJob, editJob} = useAppContext()
 
   const handleJobInput = (e) =>{
     const name = e.target.name
@@ -23,6 +23,7 @@ const AddJob = () => {
     }
 
     if(isEditing){
+      editJob()
       return 
     }
 
