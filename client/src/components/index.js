@@ -9,5 +9,7 @@ import JobsContainer from './JobsContainer'
 import ChartsContainer from './ChartsContainer'
 import StatsContainer from './StatsContainer'
 import StatsItem from './StatsItem'
+import BarCharts from './BarChart'
+import AreaChart from './AreaChart' 
 
-export {Logo, Formrow, Alert, Navbar, SmallSidebar, BigSidebar, SearchContainer, JobsContainer, ChartsContainer, StatsContainer, StatsItem}
+export {Logo, Formrow, Alert, Navbar, SmallSidebar, BigSidebar, SearchContainer, JobsContainer, ChartsContainer, StatsContainer, StatsItem, BarCharts, AreaChart}
