@@ -192,7 +192,7 @@ const AppProvider = ({children}) => {
     }
     catch(err){
       console.log(err.response);
-      // logoutUser()
+      logoutUser()
     }
     clearAlert()
   }
