@@ -22,7 +22,13 @@ const deleteJob = async (req,res) =>{
 }
 
 const getAllJobs = async (req,res) =>{
-    res.send("Get All Jobs")
+    const job = await Job.find({createdBy: req.user.userId})
+
+    res.status(StatusCodes.OK).json({
+        totalJobs: job.length,
+        numOfPages: 1,
+        job,
+    })
 }
 
 const updateJob = async (req,res) =>{
