@@ -1,6 +1,6 @@
 import React, {createContext, useReducer, useContext, useEffect} from 'react'
 import reducer from './reducer'
-import {DISPLAY_ALERT, CLEAR_ALERT, REGISTER_USER_BEGIN, REGISTER_USER_SUCCESS, REGISTER_USER_ERROR, LOGIN_USER_BEGIN, LOGIN_USER_SUCCESS, LOGIN_USER_ERROR, TOGGLE_SIDEBAR, LOGOUT_USER, UPDATE_USER_BEGIN, UPDATE_USER_SUCCESS, UPDATE_USER_ERROR, HANDLE_CHANGE, CLEAR_VALUES, CREATE_JOB_BEGIN, CREATE_JOB_SUCCESS, CREATE_JOB_ERROR, GET_JOBS_BEGIN, GET_JOBS_SUCCESS, SET_EDIT_JOB} from './actions'
+import {DISPLAY_ALERT, CLEAR_ALERT, REGISTER_USER_BEGIN, REGISTER_USER_SUCCESS, REGISTER_USER_ERROR, LOGIN_USER_BEGIN, LOGIN_USER_SUCCESS, LOGIN_USER_ERROR, TOGGLE_SIDEBAR, LOGOUT_USER, UPDATE_USER_BEGIN, UPDATE_USER_SUCCESS, UPDATE_USER_ERROR, HANDLE_CHANGE, CLEAR_VALUES, CREATE_JOB_BEGIN, CREATE_JOB_SUCCESS, CREATE_JOB_ERROR, GET_JOBS_BEGIN, GET_JOBS_SUCCESS, SET_EDIT_JOB, DELETE_JOB_BEGIN, EDIT_JOB_BEGIN, EDIT_JOB_SUCCESS, EDIT_JOB_ERROR} from './actions'
 import axios from 'axios'
 
 const token = localStorage.getItem('token')
@@ -199,12 +199,34 @@ const AppProvider = ({children}) => {
     console.log(`Edit job ${id}`);
   }
 
-  const editJob = () =>{
-    console.log('edit job');
+  const editJob = async () =>{
+    dispatch({type: EDIT_JOB_BEGIN})
+    try{
+      const {position, company, jobLocation, jobType, status} = state
+      await authFetch.patch(`jobs/${state.editJobId}`, {
+        position, company, jobLocation, jobType, status
+      })
+      dispatch({type: EDIT_JOB_SUCCESS})
+      dispatch({type: CLEAR_VALUES})
+    }
+    catch(err){
+      if(err.response.status === 401) return 
+      dispatch({type: EDIT_JOB_ERROR, payload: {
+        msg: err.response.data.msg
+      }})
+    }
+    clearAlert()
   }
 
-  const deleteJob = (id) =>{
-    console.log(`Delete job ${id}`);
+  const deleteJob = async (id) =>{
+    dispatch({type: DELETE_JOB_BEGIN})
+    try{
+      await authFetch.delete(`/jobs/${id}`)
+      getJobs()
+    }
+    catch(err){
+      logoutUser()
+    }
   }
 
   return <AppContext.Provider value={{...state, displayAlert, registerUser, loginUser, toggleSidebar, logoutUser, updateUser, handleChange, clearValues, createJob, getJobs, setEditJob, deleteJob, editJob}}>
