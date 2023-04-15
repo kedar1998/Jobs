@@ -11,5 +11,6 @@ import StatsContainer from './StatsContainer'
 import StatsItem from './StatsItem'
 import BarCharts from './BarChart'
 import AreaChart from './AreaChart' 
+import Formrowselect from './Formrowselect'
 
-export {Logo, Formrow, Alert, Navbar, SmallSidebar, BigSidebar, SearchContainer, JobsContainer, ChartsContainer, StatsContainer, StatsItem, BarCharts, AreaChart}
+export {Logo, Formrow, Formrowselect, Alert, Navbar, SmallSidebar, BigSidebar, SearchContainer, JobsContainer, ChartsContainer, StatsContainer, StatsItem, BarCharts, AreaChart}

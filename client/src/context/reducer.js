@@ -1,5 +1,5 @@
 import React from 'react'
-import {DISPLAY_ALERT, CLEAR_ALERT, REGISTER_USER_BEGIN, REGISTER_USER_SUCCESS, REGISTER_USER_ERROR, LOGIN_USER_BEGIN, LOGIN_USER_SUCCESS, LOGIN_USER_ERROR, TOGGLE_SIDEBAR, LOGOUT_USER, UPDATE_USER_BEGIN, UPDATE_USER_SUCCESS, UPDATE_USER_ERROR, HANDLE_CHANGE, CLEAR_VALUES, CREATE_JOB_BEGIN, CREATE_JOB_SUCCESS, CREATE_JOB_ERROR, GET_JOBS_BEGIN, GET_JOBS_SUCCESS, SET_EDIT_JOB, DELETE_JOB_BEGIN, EDIT_JOB_BEGIN, EDIT_JOB_SUCCESS, EDIT_JOB_ERROR, SHOW_STATS_BEGIN, SHOW_STATS_SUCCESS} from './actions'
+import {DISPLAY_ALERT, CLEAR_ALERT, REGISTER_USER_BEGIN, REGISTER_USER_SUCCESS, REGISTER_USER_ERROR, LOGIN_USER_BEGIN, LOGIN_USER_SUCCESS, LOGIN_USER_ERROR, TOGGLE_SIDEBAR, LOGOUT_USER, UPDATE_USER_BEGIN, UPDATE_USER_SUCCESS, UPDATE_USER_ERROR, HANDLE_CHANGE, CLEAR_VALUES, CREATE_JOB_BEGIN, CREATE_JOB_SUCCESS, CREATE_JOB_ERROR, GET_JOBS_BEGIN, GET_JOBS_SUCCESS, SET_EDIT_JOB, DELETE_JOB_BEGIN, EDIT_JOB_BEGIN, EDIT_JOB_SUCCESS, EDIT_JOB_ERROR, SHOW_STATS_BEGIN, SHOW_STATS_SUCCESS, CLEAR_FILTERS} from './actions'
 import { initialState } from './appContext'
 
 const reducer = (state, action) => {
@@ -90,7 +90,7 @@ const reducer = (state, action) => {
     }
 
     if(action.type === GET_JOBS_SUCCESS){
-        return {...state, isLoading: false, jobs: action.payload.job, totalJobs: action.payload.totalJobs, numOfPages: action.payload.numOfPages}
+        return {...state, isLoading: false, jobs: action.payload.jobs, totalJobs: action.payload.totalJobs, numOfPages: action.payload.numOfPages}
     }
 
     if(action.type === SET_EDIT_JOB){
@@ -123,6 +123,13 @@ const reducer = (state, action) => {
 
     if(action.type === SHOW_STATS_SUCCESS){
         return {...state, isLoading: false, stats: action.payload.stats, monthlyApplications: action.payload.monthlyApplications}
+    }
+
+    if(action.type === CLEAR_FILTERS){
+        return {...state, search: '',
+        searchStatus: 'all',
+        searchType: 'all',
+        sort: 'latest',}
     }
 
     

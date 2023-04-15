@@ -1,6 +1,6 @@
 import React, {createContext, useReducer, useContext, useEffect} from 'react'
 import reducer from './reducer'
-import {DISPLAY_ALERT, CLEAR_ALERT, REGISTER_USER_BEGIN, REGISTER_USER_SUCCESS, REGISTER_USER_ERROR, LOGIN_USER_BEGIN, LOGIN_USER_SUCCESS, LOGIN_USER_ERROR, TOGGLE_SIDEBAR, LOGOUT_USER, UPDATE_USER_BEGIN, UPDATE_USER_SUCCESS, UPDATE_USER_ERROR, HANDLE_CHANGE, CLEAR_VALUES, CREATE_JOB_BEGIN, CREATE_JOB_SUCCESS, CREATE_JOB_ERROR, GET_JOBS_BEGIN, GET_JOBS_SUCCESS, SET_EDIT_JOB, DELETE_JOB_BEGIN, EDIT_JOB_BEGIN, EDIT_JOB_SUCCESS, EDIT_JOB_ERROR, SHOW_STATS_BEGIN, SHOW_STATS_SUCCESS} from './actions'
+import {DISPLAY_ALERT, CLEAR_ALERT, REGISTER_USER_BEGIN, REGISTER_USER_SUCCESS, REGISTER_USER_ERROR, LOGIN_USER_BEGIN, LOGIN_USER_SUCCESS, LOGIN_USER_ERROR, TOGGLE_SIDEBAR, LOGOUT_USER, UPDATE_USER_BEGIN, UPDATE_USER_SUCCESS, UPDATE_USER_ERROR, HANDLE_CHANGE, CLEAR_VALUES, CREATE_JOB_BEGIN, CREATE_JOB_SUCCESS, CREATE_JOB_ERROR, GET_JOBS_BEGIN, GET_JOBS_SUCCESS, SET_EDIT_JOB, DELETE_JOB_BEGIN, EDIT_JOB_BEGIN, EDIT_JOB_SUCCESS, EDIT_JOB_ERROR, SHOW_STATS_BEGIN, SHOW_STATS_SUCCESS, CLEAR_FILTERS} from './actions'
 import axios from 'axios'
 
 const token = localStorage.getItem('token')
@@ -35,6 +35,12 @@ const initialState = {
     // STATS
     stats: {},
     monthlyApplications: [],
+    // SEARCH
+    search: '',
+    searchStatus: 'all',
+    searchType: 'all',
+    sort: 'latest',
+    sortOptions: ['latest', 'oldest', 'a-z', 'z-a'],
 }
 
 const AppContext = createContext()
@@ -183,12 +189,18 @@ const AppProvider = ({children}) => {
   }
 
   const getJobs = async () =>{
-    let url = `/jobs`
+    const {search, searchStatus, searchType, sort} = state
+    let url = `/jobs?status=${searchStatus}&jobType=${searchType}&sort=${sort}`
+
+    if(search){
+      url = url +`&search=${search}`
+    }
+
     dispatch({type: GET_JOBS_BEGIN})
     try{
       const {data} = await authFetch.get(url)
-      const {job, totalJobs, numOfPages} = data
-      dispatch({type: GET_JOBS_SUCCESS, payload: {job, totalJobs, numOfPages}})
+      const {jobs, totalJobs, numOfPages} = data
+      dispatch({type: GET_JOBS_SUCCESS, payload: {jobs, totalJobs, numOfPages}})
     }
     catch(err){
       console.log(err.response);
@@ -249,7 +261,11 @@ const AppProvider = ({children}) => {
     clearAlert()
   }
 
-  return <AppContext.Provider value={{...state, displayAlert, registerUser, loginUser, toggleSidebar, logoutUser, updateUser, handleChange, clearValues, createJob, getJobs, setEditJob, deleteJob, editJob, showStats}}>
+  const clearFilters = () =>{
+    dispatch({type: CLEAR_FILTERS})
+  }
+
+  return <AppContext.Provider value={{...state, displayAlert, registerUser, loginUser, toggleSidebar, logoutUser, updateUser, handleChange, clearValues, createJob, getJobs, setEditJob, deleteJob, editJob, showStats, clearFilters}}>
     {children}
   </AppContext.Provider>
 }
